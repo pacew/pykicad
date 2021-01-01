@@ -50,7 +50,10 @@ class Xy(AST):
 class Pts(AST):
     tag = 'pts'
     schema = {
-        'xy': Xy
+        'xy': {
+            '_parser': Xy,
+            '_multiple': True
+        }
     }
 
     def __init__(self, xy=None):

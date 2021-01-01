@@ -5,7 +5,7 @@
 		       (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
 
 		       (symbol "LED_0_1"  
-			       (polyline "foo" (pts (xy 1 2)))
+			       (polyline "foo" (pts (xy 1 2) (xy 1 2)))
 			       )
 		       
 		       ))
