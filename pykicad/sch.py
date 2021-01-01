@@ -128,15 +128,25 @@ class Property(AST):
     def __init__(self, name='', pname=None, pval=None, id=None, at=None, effects=None):
         super(self.__class__, self).__init__(pname=pname, pval=pval, id=id, at=at, effects=effects)
 
+class Stroke(AST):
+    tag = 'stroke'
+    schema = {
+        'width': number
+    }
+
+    def __init__(self, width=None):
+        super(self.__class__, self).__init__(width=width)
+
 class Polyline(AST):
     tag = 'polyline'
     schema = {
         '0': qstring('name'),
-        'pts': Pts
+        'pts': Pts,
+        'stroke': Stroke
     }
 
-    def __init__(self, name=None, pts=None):
-        super(self.__class__, self).__init__(name=name, pts=pts)
+    def __init__(self, name=None, pts=None, stroke=None):
+        super(self.__class__, self).__init__(name=name, pts=pts, stroke=stroke)
 
 
 class GrSymbol(AST):
