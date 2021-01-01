@@ -50,14 +50,11 @@ class Xy(AST):
 class Pts(AST):
     tag = 'pts'
     schema = {
-        '0': {
-            '_attr': 'x',
-            '_parser': Xy
-        }
+        '0': Xy
     }
 
-    def __init__(self, x=None):
-        super(self.__class__, self).__init__(x=x)
+    def __init__(self, xy):
+        super(self.__class__, self).__init__(xy=xy)
 
 def qstring(name):
     # if the input side is changed to interpret c escapes
