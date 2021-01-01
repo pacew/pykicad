@@ -137,16 +137,28 @@ class Stroke(AST):
     def __init__(self, width=None):
         super(self.__class__, self).__init__(width=width)
 
+# (fill (type none))
+class Fill(AST):
+    tag = 'fill'
+    schema = {
+        'xtype': text
+    }
+
+    def __init__(self, xtype=None):
+        super(self.__class__, self).__init__(xtype=xtype)
+
+
 class Polyline(AST):
     tag = 'polyline'
     schema = {
         '0': qstring('name'),
         'pts': Pts,
-        'stroke': Stroke
+        'stroke': Stroke,
+        'fill': Fill
     }
 
-    def __init__(self, name=None, pts=None, stroke=None):
-        super(self.__class__, self).__init__(name=name, pts=pts, stroke=stroke)
+    def __init__(self, name=None, pts=None, stroke=None, fill=None):
+        super(self.__class__, self).__init__(name=name, pts=pts, stroke=stroke, fill=fill)
 
 
 class GrSymbol(AST):
