@@ -7,5 +7,5 @@
 		       (symbol "LED_0_1"  
 			       (polyline "foo" (pts (xy 1 2) (xy 1 2))
 					 (stroke (width 1))
-					 (fill (xtype none))
+					 (fill (type none))
 					 )))))
