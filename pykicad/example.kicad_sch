@@ -4,6 +4,10 @@
   (lib_symbols (symbol "Device:LED" (pin_numbers hide) 
 		       (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
 		       (property "Reference" "D"  (id 0) (at 0 2.54 0) (effects (font (size 1.27 1.27))))
+		       (property "Value" "LED" (id 1) (at 0 -2.54 0)
+				 (effects (font (size 1.27 1.27)))
+				 )
+		       
 		       ))
   (font (size 1 1))
   
