@@ -50,8 +50,9 @@ class Symbol(AST):
     def __init__(self, name='', symbol_name=None):
         super(self.__class__, self).__init__(symbol_name=symbol_name)
 
-class Page(AST):
-    tag = 'page'
+
+class Paper(AST):
+    tag = 'paper'
     schema = {
         'psize': qstring('psize')
     }
@@ -91,12 +92,14 @@ class Sch(AST):
             '_tag': 'version',
             '_parser': integer
         },
-        '1': {
-            '_tag': 'host',
+        'host': {
             '_parser': text + text
         },
-        'page': {
-            '_parser': Page
+        'generator': {
+            '_parser': text
+        },
+        'paper': {
+            '_parser': Paper
         },
 
         'font': {
@@ -120,7 +123,8 @@ class Sch(AST):
     def __init__(self, 
                  version=1, 
                  host=['pykicad', 'x.x.x'],
-                 page=None,
+                 generator=None,
+                 paper=None,
                  lib_symbols=None,
                  symbol_instances=None,
                  font=None,
@@ -130,8 +134,9 @@ class Sch(AST):
         symbol_instances = self.init_list(symbol_instances, [])
 
         super(self.__class__, self).__init__(version=version, 
+                                             generator=generator,
                                              host=host,
-                                             page=page,
+                                             paper=paper,
                                              lib_symbols=lib_symbols,
                                              symbol_instances=symbol_instances,
                                              font=font,
