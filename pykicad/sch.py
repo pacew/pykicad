@@ -141,11 +141,11 @@ class Stroke(AST):
 class Fill(AST):
     tag = 'fill'
     schema = {
-        'xtype': text
+        'type': text
     }
 
-    def __init__(self, xtype=None):
-        super(self.__class__, self).__init__(xtype=xtype)
+    def __init__(self, type=None):
+        super(self.__class__, self).__init__(type=type)
 
 
 class Polyline(AST):
