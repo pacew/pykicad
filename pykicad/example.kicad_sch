@@ -1,0 +1,7 @@
+(kicad_sch (version 20200310) (host eeschema "unknown")
+(  page "foo \ bar")
+(lib_symbols (symbol 1))
+(font (size 1 1))
+
+
+)
