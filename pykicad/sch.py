@@ -151,14 +151,13 @@ class Fill(AST):
 class Polyline(AST):
     tag = 'polyline'
     schema = {
-        '0': qstring('name'),
         'pts': Pts,
         'stroke': Stroke,
         'fill': Fill
     }
 
-    def __init__(self, name=None, pts=None, stroke=None, fill=None):
-        super(self.__class__, self).__init__(name=name, pts=pts, stroke=stroke, fill=fill)
+    def __init__(self, pts=None, stroke=None, fill=None):
+        super(self.__class__, self).__init__(pts=pts, stroke=stroke, fill=fill)
 
 
 class GrSymbol(AST):
