@@ -50,6 +50,16 @@ class PinNumbers(AST):
     def __init__(self, hide=None):
         super(self.__class__, self).__init__(hide=hide)
 
+class PinNames(AST):
+    tag = 'pin_names'
+    schema = {
+        'offset': number,
+        'hide': flag('hide')
+    }
+
+    def __init__(self, offset=None, hide=None):
+        super(self.__class__, self).__init__(offset=offset, hide=hide)
+
 
 class Symbol(AST):
     tag = 'symbol'
@@ -57,11 +67,15 @@ class Symbol(AST):
         '0': qstring('symbol_name'),
         'pin_numbers': {
             '_parser': PinNumbers
+        },
+        'pin_names': {
+            '_parser': PinNames
         }
     }
 
-    def __init__(self, name='', symbol_name=None, pin_numbers=None):
-        super(self.__class__, self).__init__(symbol_name=symbol_name, pin_numbers=pin_numbers)
+    def __init__(self, name='', symbol_name=None, pin_numbers=None, pin_names=None):
+        super(self.__class__, self).__init__(symbol_name=symbol_name, pin_numbers=pin_numbers,
+                                             pin_names=pin_names)
 
 
 class Paper(AST):
