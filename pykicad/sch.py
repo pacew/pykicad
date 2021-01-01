@@ -165,7 +165,8 @@ class GrSymbol(AST):
     schema = {
         '0': qstring('name'),
         'polyline': {
-            '_parser': Polyline
+            '_parser': Polyline,
+            '_multiple': True
         }
     }
 
