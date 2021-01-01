@@ -13,4 +13,11 @@
 					 (stroke (width 1))
 					 (fill (type none))
 					 )
-					 ))))
+					 )
+		       (symbol "LED_1_1"
+			       (pin passive line (at -3.81 0 0)
+				    (length 2.54))
+			       )
+
+
+)))

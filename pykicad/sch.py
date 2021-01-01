@@ -160,6 +160,31 @@ class Polyline(AST):
         super(self.__class__, self).__init__(pts=pts, stroke=stroke, fill=fill)
 
 
+
+
+class Pin(AST):
+    tag = 'pin'
+    schema = {
+        '0': {
+            '_attr': 'pdir',
+            '_parser': text
+        },
+        '1': {
+            '_attr': 'pstyle',
+            '_parser': text
+        },
+        'at': {
+            '_parser': number + number + number
+        },
+        'length': {
+            '_parser': number
+        },
+    }
+
+    def __init__(self, pdir=None, pstyle=None, at=None, length=None):
+        super(self.__class__, self).__init__(pdir=pdir, pstyle=pstyle, at=at, length=length)
+
+
 class GrSymbol(AST):
     tag = 'symbol'
     schema = {
@@ -167,11 +192,12 @@ class GrSymbol(AST):
         'polyline': {
             '_parser': Polyline,
             '_multiple': True
-        }
+        },
+        'pin': Pin
     }
 
-    def __init__(self, name=None, polyline=None):
-        super(self.__class__, self).__init__(name=name, polyline=polyline)
+    def __init__(self, name=None, polyline=None, pin=None):
+        super(self.__class__, self).__init__(name=name, polyline=polyline, pin=pin)
 
 class Symbol(AST):
     tag = 'symbol'
@@ -191,7 +217,8 @@ class Symbol(AST):
 
         },
         'symbol': {
-            '_parser': GrSymbol
+            '_parser': GrSymbol,
+            '_multiple': True
         }
     }
 
