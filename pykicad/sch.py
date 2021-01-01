@@ -41,14 +41,27 @@ def qstring(name):
         '_attr': name
     }
 
+class PinNumbers(AST):
+    tag = 'pin_numbers'
+    schema = {
+        'hide': flag('hide')
+    }
+
+    def __init__(self, hide=None):
+        super(self.__class__, self).__init__(hide=hide)
+
+
 class Symbol(AST):
     tag = 'symbol'
     schema = {
-        '0': qstring('symbol_name')
+        '0': qstring('symbol_name'),
+        'pin_numbers': {
+            '_parser': PinNumbers
+        }
     }
 
-    def __init__(self, name='', symbol_name=None):
-        super(self.__class__, self).__init__(symbol_name=symbol_name)
+    def __init__(self, name='', symbol_name=None, pin_numbers=None):
+        super(self.__class__, self).__init__(symbol_name=symbol_name, pin_numbers=pin_numbers)
 
 
 class Paper(AST):
