@@ -60,6 +60,46 @@ class PinNames(AST):
     def __init__(self, offset=None, hide=None):
         super(self.__class__, self).__init__(offset=offset, hide=hide)
 
+class Font(AST):
+    tag = 'font'
+    schema = {
+        'size': {
+            '_parser': Size
+        }
+    }
+
+    def __init__(self, name='', size=None):
+        super(self.__class__, self).__init__(size=size)
+
+class Effects(AST):
+    tag = 'effects'
+    schema = {
+        'font': {
+            '_parser': Font
+        }
+    }
+
+    def __init__(self, name='', font=None):
+        super(self.__class__, self).__init__(font=font)
+
+
+class Property(AST):
+    tag = 'property'
+    schema = {
+        '0': qstring('pname'),
+        '1': qstring('pval'),
+        'id': integer,
+        'at': {
+            '_parser': number + number + number
+        },
+        'effects': {
+            '_parser': Effects
+        }
+    }
+
+    def __init__(self, name='', pname=None, pval=None, id=None, at=None, effects=None):
+        super(self.__class__, self).__init__(pname=pname, pval=pval, id=id, at=at, effects=effects)
+
 
 class Symbol(AST):
     tag = 'symbol'
@@ -70,12 +110,19 @@ class Symbol(AST):
         },
         'pin_names': {
             '_parser': PinNames
+        },
+        'in_bom': yes_no('in_bom'),
+        'on_board': yes_no('on_board'),
+        'property': {
+            '_parser': Property
         }
     }
 
-    def __init__(self, name='', symbol_name=None, pin_numbers=None, pin_names=None):
+    def __init__(self, name='', symbol_name=None, pin_numbers=None, pin_names=None, in_bom=None,
+                 on_board=None, property=None):
         super(self.__class__, self).__init__(symbol_name=symbol_name, pin_numbers=pin_numbers,
-                                             pin_names=pin_names)
+                                             pin_names=pin_names, in_bom=in_bom,
+                                             on_board=on_board, property=property)
 
 
 class Paper(AST):
@@ -87,18 +134,6 @@ class Paper(AST):
     def __init__(self, name='', psize=None):
         super(self.__class__, self).__init__(psize=psize)
 
-
-
-class Font(AST):
-    tag = 'font'
-    schema = {
-        'size': {
-            '_parser': Size
-        }
-    }
-
-    def __init__(self, name='', size=None, bar=None):
-        super(self.__class__, self).__init__(size=size, bar=bar)
 
 class LibSymbols(AST):
     tag = 'lib_symbols'
@@ -154,8 +189,7 @@ class Sch(AST):
                  paper=None,
                  lib_symbols=None,
                  symbol_instances=None,
-                 font=None,
-                 bar=None
+                 font=None
     ):
         # lib_symbols = self.init_list(lib_symbols, [])
         symbol_instances = self.init_list(symbol_instances, [])
@@ -166,8 +200,7 @@ class Sch(AST):
                                              paper=paper,
                                              lib_symbols=lib_symbols,
                                              symbol_instances=symbol_instances,
-                                             font=font,
-                                             bar=bar
+                                             font=font
         )
 
     def to_file(self, path):
