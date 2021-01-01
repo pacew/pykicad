@@ -1,7 +1,7 @@
 (kicad_sch (version 20201015) (generator eeschema)
   (paper "A4")
 
-(lib_symbols (symbol 1))
+(lib_symbols (symbol "Device:LED"))
 (font (size 1 1))
 
 
