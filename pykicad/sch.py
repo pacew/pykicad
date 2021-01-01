@@ -31,6 +31,34 @@ class Size(AST):
     def __init__(self, width=None, height=None):
         super(self.__class__, self).__init__(width=width, height=height)
 
+class Xy(AST):
+    tag = 'xy'
+    schema = {
+        '0': {
+            '_attr': 'x',
+            '_parser': number
+        },
+        '1': {
+            '_attr': 'y',
+            '_parser': number
+        }
+    }
+
+    def __init__(self, x=None, y=None):
+        super(self.__class__, self).__init__(x=x, y=y)
+
+class Pts(AST):
+    tag = 'pts'
+    schema = {
+        '0': {
+            '_attr': 'x',
+            '_parser': Xy
+        }
+    }
+
+    def __init__(self, x=None):
+        super(self.__class__, self).__init__(x=x)
+
 def qstring(name):
     # if the input side is changed to interpret c escapes
     # change _printer here to json.dumps
@@ -100,6 +128,28 @@ class Property(AST):
     def __init__(self, name='', pname=None, pval=None, id=None, at=None, effects=None):
         super(self.__class__, self).__init__(pname=pname, pval=pval, id=id, at=at, effects=effects)
 
+class Polyline(AST):
+    tag = 'polyline'
+    schema = {
+        '0': qstring('name'),
+        'pts': Pts
+    }
+
+    def __init__(self, name=None, pts=None):
+        super(self.__class__, self).__init__(name=name, pts=pts)
+
+
+class GrSymbol(AST):
+    tag = 'symbol'
+    schema = {
+        '0': qstring('name'),
+        'polyline': {
+            '_parser': Polyline
+        }
+    }
+
+    def __init__(self, name=None, polyline=None):
+        super(self.__class__, self).__init__(name=name, polyline=polyline)
 
 class Symbol(AST):
     tag = 'symbol'
@@ -114,15 +164,20 @@ class Symbol(AST):
         'in_bom': yes_no('in_bom'),
         'on_board': yes_no('on_board'),
         'property': {
-            '_parser': Property
+            '_parser': Property,
+            '_multiple': True
+
+        },
+        'symbol': {
+            '_parser': GrSymbol
         }
     }
 
     def __init__(self, name='', symbol_name=None, pin_numbers=None, pin_names=None, in_bom=None,
-                 on_board=None, property=None):
+                 on_board=None, property=None, symbol=None):
         super(self.__class__, self).__init__(symbol_name=symbol_name, pin_numbers=pin_numbers,
                                              pin_names=pin_names, in_bom=in_bom,
-                                             on_board=on_board, property=property)
+                                             on_board=on_board, property=property, symbol=symbol)
 
 
 class Paper(AST):
